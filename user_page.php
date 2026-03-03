@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GLOBALIZE: The Next Mission</title>
+
+  <style>
+    /* GENERAL STYLES */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* NAVIGATION BAR */
+    nav {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      padding: 1rem 2rem;
+      position: fixed;
+      z-index: 2;
+      width: 100%;
+      z-index: 1000;
+	  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      justify-content: center;
+      display: flex;
+      gap: 3rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* HERO SECTION (Logo + Home Content) */
+    #home {
+      position: relative;
+      background-image: url("GLOBALZE_ THE NEXT MISSION/IMAGES/glizebg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 20px;
+    }
+
+    /* Dark overlay for readability */
+    #home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    #home * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .glizeimg img {
+      width: 200px;
+      border-radius: 50px;
+      border: 5px solid #0055d4;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color:#2a5298;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      max-width: 1000px;
+      margin: 0 auto 1.5rem auto;
+      text-align: justify;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* ABOUT US SECTION */
+#aboutus {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* MAIN CONTAINER FOR THE TEAM */
+.team-section {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* SECTION TITLE (Our Team) */
+.team-section > h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #1e3c72;
+  margin-bottom: 3rem;
+}
+
+/* --- GROUP (Frontend / Backend Developers) --- */
+.team-group {
+  margin-bottom: 3rem;
+}
+
+/* GROUP TITLE (Frontend Developers, Backend Developers) */
+.team-group h3 {
+  color: #1e3c72;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+/* TEAM MEMBER CONTAINER */
+.team-members {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* INDIVIDUAL MEMBER CONTAINER */
+.member-circle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* CIRCLE FOR PROFILE IMAGE */
+.circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+/* IMAGE INSIDE CIRCLE */
+.circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* HOVER EFFECT FOR PROFILE CIRCLE */
+.circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* HIDDEN INFO CARD BELOW PROFILE */
+.hover-card {
+  position: absolute;
+  top: 140px;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+/* SHOW INFO CARD WHEN HOVERING PROFILE */
+.member-circle:hover .hover-card {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* NAME INSIDE HOVER CARD */
+.hover-card h4 {
+  color: #2a5298;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* ROLE OR POSITION INSIDE HOVER CARD */
+.hover-card p {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+    #programs {
+      padding: 100px 20px;
+      background: #f8f9fa;
+      min-height: 100vh;
+    }
+
+  .programs-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    justify-items: center;
+    align-items: stretch;
+	grid-auto-rows: 1fr;
+  }
+
+  .programs-card{
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3 ease;
+    cursor: pointer;
+    width: 100%;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+	align-items: center;
+    text-align: center;
+	height: 100%;
+  }
+
+  .programs-card p {
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .programs-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+
+.program-logo,
+.program-logo1,
+.program-logo2,
+.program-logo3 {
+  width: 300px;
+  height: 300px;
+  border-radius: 60px; 
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box; 
+  padding: 1rem; 
+  margin-bottom: 0.5rem; 
+}
+
+
+.program-logo img,
+.program-logo1 img,
+.program-logo2 img,
+.program-logo3 img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain;
+  object-position: center; 
+  display: block;
+}
+
+   #contact {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+		min-height: 100vh;
+        display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 0px 20px;
+		margin: 0;
+		box-sizing: border-box;
+		text-align: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		overflow: hidden;
+      }
+
+      #contact h1 {
+        color: white;
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .contact-info{
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .contact-item{
+        background: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+      }
+
+      .contact-item a{
+        color: white;
+        text-decoration: none;
+      }
+
+      .contact-item a:hover{
+		text-decoration: underline;
+		}
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#aboutus">About Us</a></li>
+      <li><a href="#contact">Contact Information</a></li>
+      <li><a href="#" onclick="if(confirm('Are you sure you want to log out?')) { window.location.href='logout.php'; } return false;">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero / Home Section -->
+  <section id="home">
+    <div class="glizeimg">
+      <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/glize logo.PNG" alt="globalize logo">
+    </div>
+    <h1>GLOBALIZE: THE NEXT MISSION</h1>
+    <p>Since its founding, DYCI has offered its students distinct and premium educational experiences. To ensure these, programs and initiatives are created and strengthened every year. The Year-Round English Skills (YES) Campaign, which the school has been implementing since 2007 to encourage its students to communicate confidently in the English language, has been one of the school's most successful initiatives.</p>
+    <p>Now rebranded as <b>GLOBALIZE</b>, the campaign offers the following programs designed to enhance English proficiency and foster confident communication among students.</p>
+  </section>
+
+  <section id="programs">
+    <h2>PROGRAMS</h2>
+    <div class="programs-grid">
+
+  <div class="programs-card" onclick="window.location.href='GLOBALZE_ THE NEXT MISSION/DLIVE.html'">
+         <div class="program-logo">
+          <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/dlivelogo.png" alt="dycianlive">
+         </div>
+          <h3>The DYClan Live</h3>
+          <p>A school news broadcasting which aims to establish a dynamic and interactive platform within the school through sharing updates, events, achievements, and relevant information. Students take on various roles such as anchors, reporters, writers, and producers, providing them with valuable hands-on experience in media production and teamwork.</p>
+        </div>
+
+        <div class="programs-card" onclick="window.location.href='GLOBALZE_ THE NEXT MISSION/TAKEOFF.html'">
+           <div class="program-logo1">
+          <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/takeofflogo.png" alt="takeofflogo">
+            </div>
+            <h3>TAKEOFF</h3>
+          <p> A video segment that highlights the conversational English skills of DYClans through spontaneous, unscripted interviews. In each episode, randomly selected students are asked questions related to the current DYClan Theme of the Month, allowing them to share their personal insights and experiences.</p>
+        </div>
+
+          <div class="programs-card" onclick="window.location.href='GLOBALZE_ THE NEXT MISSION/GLIVE.html'">
+          <div class="program-logo2">
+          <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/globalivelogo.png" alt="globalivelogo">
+          </div>
+          <h3>Globalive</h3>
+          <p>A monthly podcast that explores the DYClan Theme of the Month through thoughtful and engaging conversations. It provides a platform where student hosts and invited guests discuss the theme in depth, offering personal insights, relevant experiences, and diverse perspectives.</p>
+        </div>
+
+         <div class="programs-card" onclick="window.location.href='GLOBALZE_ THE NEXT MISSION/Novellus.html'">
+          <div class="program-logo3">
+          <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/novelluslogo.png" alt="novellus">
+          </div>
+          <h3>Novellus</h3>
+          <p>The official student organization for avid readers who are passionate about promoting literacy and a love for the English language. The organization supports fellow DYClans who struggle with reading by offering peer-led reading guidance and encouragement, fostering a more inclusive and empowered learning environment.</p>
+        </div>
+      </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="aboutus">
+    <div class="team-section">
+
+      <h2>Our Team</h2>
+
+      <!-- Frontend Developers Group-->
+      <div class="team-group">
+        <h3>Frontend Developers</h3>
+        <div class="team-members">
+
+          <div class="member-circle">
+            <div class="circle">
+              <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/Gregg.jpg">
+            </div>
+            <div class="hover-card">
+              <h4>Gregg Lawrence Peñalosa</h4>
+              <p>Frontend Developer</p>
+            </div>
+          </div>
+
+          <div class="member-circle">
+            <div class="circle">
+              <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/Jaimiel.jpg">
+            </div>
+            <div class="hover-card">
+              <h4>Jaimiel Elise <br> Lising </br> </h4>
+              <p>Frontend Developer</p>
+            </div>
+          </div>
+
+          <div class="member-circle">
+            <div class="circle">
+              <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/Marcel.jpg">
+            </div>
+            <div class="hover-card">
+              <h4>Marcel Isaah <br> Del Rosario </br> </h4>
+              <p>Frontend Developer</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Backend Developers Group-->
+      <div class="team-group">
+        <h3>Backend Developers</h3>
+        <div class="team-members">
+
+          <div class="member-circle">
+            <div class="circle">
+              <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/Freya.jpg">
+            </div>
+            <div class="hover-card">
+              <h4>Freya Marie <br> Celestino </br> </h4>
+              <p>Backend Developer</p>
+            </div>
+          </div>
+
+          <div class="member-circle">
+            <div class="circle">
+              <img src="GLOBALZE_ THE NEXT MISSION/IMAGES/Edrei.jpg">
+            </div>
+            <div class="hover-card">
+              <h4>Edrei Ian <br> Papong </br> </h4>
+              <p>Backend Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h1>Contact Information</h1>
+    <div class="contact-info">
+
+      <div class="contact-item">
+        <strong>Email:</strong><br>
+        <a href="mailto:globalize.dyci@gmail.com">globalize.dyci@gmail.com</a>
+      </div>
+
+      <div class="contact-item">
+        <strong>Phone:</strong><br>
+        <a href="tel:09123456789">0912-345-6789</a>
+      </div>
+
+      <p style="margin-top: 2rem; opacity: 0.9;">
+        Feel free to reach out to us for any inquiries about the GLOBALIZE programs or collaboration opportunities.
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>
