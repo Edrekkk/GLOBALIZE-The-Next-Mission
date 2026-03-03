@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOBALIVE</title>
+    <style>
+
+.accomplishment-card.hover-expand .tooltip p {
+    transition: opacity 500ms cubic-bezier(0.22,0.8,0.2,1), transform 500ms cubic-bezier(0.22,0.8,0.2,1);
+    opacity: 0;
+    transform: translateY(6px);
+}
+.accomplishment-card.hover-expand:hover .tooltip p,
+.accomplishment-card.hover-expand:focus-within .tooltip p {
+    opacity: 1;
+    transform: translateY(0);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef1f5 100%);
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #75058b 0%, #91089b 100%);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #80077c 0%, #ab02b1 100%);
+}
+
+.logout-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #75058b 0%, #91089b 100%);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
+    z-index: 1000;
+}
+
+.logout-button:hover {
+    background: linear-gradient(135deg, #80077c 0%, #ab02b1 100%);
+}
+
+.header {
+    position: relative;
+    color: white;
+    padding: 80px 2rem 50px 2rem;
+    text-align: center;
+    background: url(IMAGES/glizebg.jpg) no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    overflow: hidden;
+    box-shadow: inset 0 0 150px rgba(0,0,0,0.2);
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(101, 0, 106, 0.9) 0%,
+        rgba(142, 2, 126, 0.8) 50%,
+        rgba(189, 2, 171, 0.7) 100%
+    );
+    z-index: 0;
+}
+
+.header * {
+    position: relative;
+    z-index: 1;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    transform: translateY(-20px);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.95;
+    display: block;
+    color: white;
+    text-align: justify;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-top: 20px;
+    background: linear-gradient(90deg, 
+        #7b0471 0%, 
+        #bb09af 50%, 
+        #d121ba 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(30, 60, 114, 0.1);
+}
+
+h3 {
+    margin-top: 20px;
+    background: linear-gradient(90deg, #7a0483 0%, #ae0ca3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+
+ .accomplishments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: stretch;
+}
+
+.content-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 1.5rem;
+}
+
+.section-title {
+    font-size: 2.25rem;
+    background: linear-gradient(90deg, #75047b 0%, #b308bc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    margin: 0 0 18px 0;
+    padding-bottom: 6px;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        #6b036e 0%, 
+        #a70a98 50%, 
+        #b518b2 100%
+    );
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 2px;
+    opacity: 0.95;
+    box-shadow: 0 2px 4px rgba(30, 60, 114, 0.2);
+}
+
+.accomplishment-card {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+    border: 1px solid transparent;
+    border-image: linear-gradient(to right, #e0e0e0, #f0f0f0) 1;
+    border-radius: 8px;
+    padding: 22px;
+    margin: 0;
+    min-height: 160px;
+    overflow: visible;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: default;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.accomplishment-card h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.accomplishment-card:hover h3,
+.accomplishment-card:focus-within h3 {
+    transform: translateY(-12px);
+}
+
+.accomplishment-card .tooltip {
+    display: block;
+    margin-top: 12px;
+}
+
+.accomplishment-card .tooltip p {
+    font-size: 1rem;
+    background: linear-gradient(90deg, #444 0%, #666 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    width: 100%;
+    margin-top: 0;
+    text-align: justify;
+}
+
+.accomplishment-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.accomplishment-card.hover-expand {
+    max-height: 64px;
+    overflow: hidden;
+    transition: max-height 600ms cubic-bezier(0.22,0.8,0.2,1), box-shadow 320ms cubic-bezier(0.22,0.8,0.2,1), transform 320ms cubic-bezier(0.22,0.8,0.2,1);
+    will-change: max-height, transform, box-shadow;
+    cursor: pointer;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+}
+
+.accomplishment-card.hover-expand h3 {
+    transition: transform 260ms ease;
+    margin: 0;
+    padding: 0;
+}
+
+.accomplishment-card.hover-expand .tooltip {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0px;
+    width: 100%;
+    transition: max-height 520ms cubic-bezier(0.22,0.8,0.2,1), opacity 320ms ease, transform 320ms ease;
+}
+
+.accomplishment-card.hover-expand:hover,
+.accomplishment-card.hover-expand:focus-within,
+.accomplishment-card.hover-expand:active {
+    max-height: 900px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+    transform: translateY(-6px);
+}
+
+.accomplishment-card.hover-expand:hover h3,
+.accomplishment-card.hover-expand:focus-within h3,
+.accomplishment-card.hover-expand:active h3 {
+    transform: translateY(-8px);
+}
+
+.accomplishment-card.hover-expand:hover .tooltip,
+.accomplishment-card.hover-expand:focus-within .tooltip,
+.accomplishment-card.hover-expand:active .tooltip {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+/* Ensure paragraph transitions are applied on tap as well */
+.accomplishment-card.hover-expand:active .tooltip p,
+.accomplishment-card.hover-expand:active .tooltip p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.featured-videos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 2rem auto;
+    max-width: 960px;
+}
+
+.featured-video-container {
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease;
+}
+
+.featured-video-container:hover {
+    transform: translateY(-6px);
+}
+
+.featured-video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .featured-videos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.video-placeholder {
+    background: linear-gradient(135deg, #a20698 0%, #bb05df 100%);
+    color: white;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    font-weight: 600;
+}
+
+.video-caption {
+    padding: 1rem;
+    margin: 0;
+    background: linear-gradient(90deg, #444 0%, #666 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.video-caption b {
+    color: #a602a6;
+    size: 1rem;
+}
+
+/* Media gallery styles */
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 24px 0 48px 0;
+    align-items: stretch;
+}
+
+.media-item {
+    position: relative;
+    background: linear-gradient(135deg, #f7f8fb 0%, #f0f2f5 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 320ms cubic-bezier(0.2,0.8,0.2,1);
+}
+
+.media-placeholder {
+    font-weight: 700;
+    background: linear-gradient(90deg, #333 0%, #555 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0 12px;
+    text-align: center;
+}
+
+.media-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(176, 4, 156, 0.55) 100%);
+    color: #fff;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    transform: translateY(100%);
+    transition: transform 260ms ease, opacity 260ms ease;
+    opacity: 0;
+}
+
+.media-item:focus-within img,
+.media-item:hover img {
+    transform: scale(1.06);
+}
+
+.content-section:has(.accomplishment-card:hover) ~ .content-section .media-item img,
+.content-section:has(.accomplishment-card:hover) ~ .content-section .featured-video-container video,
+.content-section:has(.accomplishment-card:hover) ~ .content-section .featured-video-container,
+body.pause-anim .media-item img,
+body.pause-anim .featured-video-container video,
+body.pause-anim .featured-video-container {
+    transform: none !important;
+    transition: none !important;
+    animation-play-state: paused !important;
+}
+
+/* Also disable hover zoom on gallery items when paused */
+.content-section:has(.accomplishment-card:hover) ~ .content-section .media-item:hover img,
+body.pause-anim .media-item:hover img {
+    transform: none !important;
+}
+
+.media-item:focus-within .media-caption,
+.media-item:hover .media-caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Make gallery items taller on wide screens */
+@media (min-width: 920px) {
+    .media-item { height: 220px; }
+}
+
+@media (max-width: 480px) {
+    .media-item { height: 160px; }
+}
+
+
+ .media-gallery {
+        display: grid; /*nag oorganize ng rows and columns = grid mismo*/
+        grid-template-columns: repeat(3, 1fr);
+/* auto-fit = automatically fits as many columns as possible minmax(250px, 1fr) = each column is at least 250px wide but can grow to fill avail space */
+        gap: 1.5rem; /* Space between grid items (both rows & columns) */
+        margin-bottom: 3rem; /* Space below the gallery, before the next section */
+      }
+
+      .media-item {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      }
+
+.media-placeholder { /*image sa kada card*/
+    width: 100%; 
+    height: 200px;
+    background: url(IMAGES/glizebg.jpg) no-repeat center center; /*Replace 'your-image.jpg' w/ your        
+    file*/
+    background-size: cover; /*Ensures the image fills the box, cropping if needed*/
+    border-radius: 8px; /* keeps rounded corners*/
+    display: block; 
+}
+      .media-caption {
+        padding: 1rem; /*spacing between the text and corners*/
+        text-align: justify; /*justify the caption text*/
+        color: #ffffff; /*font color gray*/
+      }
+
+      .video-container {
+        background: white; /*background or color ng video container*/
+        padding: 1.5rem; /*adds space sa loob*/
+        border-radius: 8px; /*rounded corners*/
+        margin-bottom: 2rem; /*space below the video section*/
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08); /*soft shadow for floating effect toh*/
+      }
+
+     .video-container video {
+      width: 100%;
+      height: auto; /*keeps aspect ratio*/
+      border-radius: 8px;
+      display: block;
+
+     }
+
+     .logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        margin: 2rem 0;
+     }
+
+     .logos img:first-child {
+        height: 200px;
+        width: auto;
+     }
+
+     .logos img:last-child {
+        height: 100px;
+        width: auto;
+     }
+
+     .logos img{
+        margin-top: 0rem;
+        filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.4));
+
+    }
+
+  
+    </style>
+</head>
+<body>
+    <a href="MAIN PAGE.html" class="back-button">Back</a>
+    <a href="../logout.php" class="logout-button">Logout</a>
+
+    <div class="header">
+        <h1>GlobaLive</h1>
+        <p>A monthly podcast that explores the DYClan Theme of the Month through thoughtful and engaging conversations. It provides a platform where student hosts and invited guests discuss the theme in depth, offering personal insights, relevant experiences.</p>
+    </div>
+
+    <div class="content-section">
+        <h2 class="section-title">Accomplishments</h2>
+        <div class="accomplishments-grid">
+
+            <div class="accomplishment-card hover-expand">
+                <h3>New Horizons <br>for Globalive</br></h3>
+                <div class="tooltip">
+                    <p>Globalive opened an exciting new chapter by welcoming eight passionate members into its growing circle — including three new hosts ready to bring fresh energy and perspectives. This expansion not only fueled creativity but also strengthened the group’s shared vision of growth, collaboration, and innovation in every production.</p>
+                </div>
+            </div>
+
+            <div class="accomplishment-card hover-expand">
+                <h3>Growing the<br>Globalive Way</br></h3>
+                <div class="tooltip">
+                    <p>With momentum on their side, the team proudly released Episode 2: Growth Month and wrapped up filming for Episode 3: GenTech Month. Each step in the process — from editing to refining the program flow — reflected Globalive’s commitment to improvement and to building a smoother, more dynamic creative system behind the scenes.</p> 
+                    </div>
+            </div>
+
+            <div class="accomplishment-card hover-expand">
+                <h3>One Vision, <br> One Flow </br></h3>
+                <div class="tooltip">
+                    <p>To keep every idea aligned, Globalive gathered for a key meeting that set clearer directions for the episodes ahead. The result was a seamless rollout — from the release of the GenTech Month episode with Ma’am Sophia Llorente to the filming of Christmas Tree Lighting and two inspiring Green-Centered Month features with Sir Jacques Tigno.</p>
+                    </div>
+            </div>
+
+            <div class="accomplishment-card hover-expand">
+                <h3>Behind the <br>Bright Lights</br></h3>
+                <div class="tooltip">
+                    <p>Teamwork came to life as Globalive filmed Christmas Special Episode 2. The production showcased not only the on-screen talent of hosts Julienne Suatengco and Juan Miguelito Garcia but also the artistry of the crew working behind the camera — guided by First Officer Ayesa Figueroa and Program Adviser Ma’am Mikee De Guzman.</p>
+                    </div>
+            </div>
+
+            <div class="accomplishment-card hover-expand">
+                <h3>Keeping <br>Globalive Green</br></h3>
+                <div class="tooltip">
+                    <p>In continuation of its advocacy, Episode 4.2: Carrying On the Green-Centered Month Celebration with Sir Jacques took center stage. This episode deepened Globalive’s commitment to environmental awareness, empowering youth and communities to take meaningful steps toward a more sustainable future.</p>
+                    </div>
+            </div>
+
+            <div class="accomplishment-card hover-expand">
+                <h3>A Season <br> to Shine</br></h3>
+                <div class="tooltip">   
+                    <p>As the year draws closer to its most festive season, Globalive sets the stage for joy and creativity. With November episodes in progress and Christmas Special Episodes on the way, the team pours its heart into crafting content that celebrates unity, purpose, and the spirit that makes Globalive truly special.</p>
+                    </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    
+    <div class="content-section">
+        <h2 class="section-title">Featured Photos</h2>
+        <div class="accomplishments-grid">
+
+      <div class="media-gallery" aria-label="Photo gallery">
+
+        <div class="media-item">
+          <img src="IMAGES/glive/GlobaLive Avant_ Behind the scene.png" alt="Glive Behind The Scene">
+          <div class="media-caption">GlobaLive Avant: Behind the scene</div>
+        </div>
+
+        <div class="media-item">
+            <img src="IMAGES/glive/GlobaLive Special Episode 3.png" alt="Globalive Special Episode 3">
+            <div class="media-caption">Globalive Special Episode 3</div>
+        </div>
+
+        <!-- 3 -->
+        <div class="media-item">
+            <img src="IMAGES/glive/GlobaLuve_ First Episode.png" alt="Globalive First Ever Episode">
+            <div class="media-caption">Globalive First Ever Episode</div>
+        </div>
+
+        <!-- 4 -->
+        <div class="media-item">
+          <img src="IMAGES/glive/Good Governance_ Behind the scene.png" alt="Glive: Behind the Scene">
+            <div class="media-caption">Good Governance Episode: Behind the scene</div>
+        </div>
+
+        <!-- 5 -->
+        <div class="media-item">
+          <img src="IMAGES/glive/Good Governance Episode.png" alt="Globalive Governance Episode">
+            <div class="media-caption">Good Governance Episode</div>
+        </div>
+
+        <!-- 6 -->
+        <div class="media-item">
+          <img src="IMAGES/glive/Special Episode 1_ Christmas.png" alt="Xmas Episode">
+            <div class="media-caption">Special Episode 1: Christmas</div>
+        </div>
+
+      </div>
+
+
+      
+    </div>
+
+    <div class="content-section">
+        <h2 class="section-title">Featured Videos</h2>
+        <div class="featured-videos-grid">
+            <div class="featured-video-container">
+                <video controls>
+                    <source src="IMAGES/glive/glive obb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="video-caption"><b>GLOBALIVE OPENING BILLBOARD</b></p>
+            </div>
+            
+            <div class="featured-video-container">
+                <video controls>
+                    <source src="IMAGES/glive/SPECIAL EPISODE FOR CHRISTMAS .mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="video-caption"><b>SPECIAL EPISODE FOR CHRISTMAS </b></p>
+            </div>
+        </div>
+
+  <div class="logos">
+    <img src="IMAGES/glive/globalivelogo (1).png" alt="">
+    <img src="IMAGES/globalizelogo.png" alt="Glize Logo">
+  </div>
+    <p style="text-align: center; margin-top: -5rem; color: #afadad;"><i>all rights reserved est 2025</i></p>
+
+</body>
+</html>
